@@ -1,0 +1,54 @@
+[tool.poetry]
+name = "myhomeworkt"
+version = "0.1.0"
+description = ""
+authors = ["Dmitry Shiltsov <sda@asperito.ru>"]
+readme = "README.md"
+repository = "/shiltsov/MOBC-mlops"
+documentation = "TBD"
+keywords = ["reproducibility", "data science", "machine learning", "template"]
+license = "Apache-2.0"
+
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.12"
+tensorflow = "^2.15.0"
+jupyter = "^1.0.0"
+tensorflow-datasets = "^4.9.3"
+notebook = "^7.0.6"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.poetry.dev-dependencies]
+pre-commit = "^3.5"
+
+
+[tool.black]
+line-length = 90
+target-version = ["py39"]
+
+
+[tool.isort]
+src_paths = ["ds_project"]
+profile = "black"
+line_length = 90
+lines_after_imports = 2
+
+
+[tool.nbqa.config]
+black = "pyproject.toml"
+isort = "pyproject.toml"
+flake8 = "setup.cfg"
+
+
+[tool.nbqa.addopts]
+flake8 = ["--extend-ignore=E402"]
+
+
+[tool.nbqa.mutate]
+black = 1
+isort = 1
