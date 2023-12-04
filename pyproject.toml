@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "hw-1"
+version = "0.1.0"
+description = ""
+authors = ["Dmitry <sda@asperito.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.12"
+tensorflow = "^2.15.0"
+jupyter = "^1.0.0"
+tensorflow-datasets = "^4.9.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
