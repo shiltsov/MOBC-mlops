@@ -26,6 +26,6 @@ pre-commit установлен в вирдуальную среду проек�
 
 ## 3 этап - запуск из командной строки (библиотека fire) (10.12.23)
 
-python3 train.py train data/x_train.npy data/y_train.npy - трейн
-python3 infer.py infer data/x_test.npy  - инференс
+- python3 train.py train data/x_train.npy data/y_train.npy - трейн
+- python3 infer.py infer data/x_test.npy  - инференс
 
