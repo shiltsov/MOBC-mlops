@@ -1,0 +1,5 @@
+outs:
+- md5: f7d852b25421f627469171356c4bcbc2
+  size: 1731
+  hash: md5
+  path: mnist_cnn_tf.ckpt.index

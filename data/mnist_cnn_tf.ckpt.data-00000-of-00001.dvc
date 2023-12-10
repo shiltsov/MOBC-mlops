@@ -1,0 +1,5 @@
+outs:
+- md5: 4f48fb237fbef83f1d968eac186039d3
+  size: 14402250
+  hash: md5
+  path: mnist_cnn_tf.ckpt.data-00000-of-00001
