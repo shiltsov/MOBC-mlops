@@ -13,6 +13,7 @@ notebook = "^7.0.6"
 jupyter = "^1.0.0"
 pre-commit = "^3.6.0"
 fire = "^0.5.0"
+dvc = "^3.33.3"
 
 
 [build-system]
