@@ -1,6 +1,7 @@
+import fire
 import numpy as np
 import tensorflow as tf
-import fire
+
 
 # Random seed for reproducibility
 seed = 42
@@ -31,20 +32,19 @@ input_shape = (28, 28, 1)
 
 
 def infer(X_test_name: str):
-    
     # The scaled mean and standard deviation of the MNIST dataset (precalculated)
     data_mean = 0.1307
-    data_std = 0.3081    
+    data_std = 0.3081
 
     # Load the MNIST dataset
     x_test = np.load(X_test_name)
-    #y_test = np.load(y_test_name)
+    # y_test = np.load(y_test_name)
 
     x_test = x_test.reshape(x_test.shape[0], x_test.shape[1], x_test.shape[2], 1)
-    
+
     # Normalize the data
     x_test = (x_test / 255.0 - data_mean) / data_std
-    #y_test = tf.one_hot(y_test.astype(np.int32), depth=num_classes)
+    # y_test = tf.one_hot(y_test.astype(np.int32), depth=num_classes)
 
     model = tf.keras.models.Sequential(
         [
@@ -67,14 +67,12 @@ def infer(X_test_name: str):
             tf.keras.layers.Dense(num_classes, activation="softmax"),
         ]
     )
-    
+
     model.load_weights("data/mnist_cnn_tf.ckpt").expect_partial()
     pred = model.predict(x_test)
-    
+
     print(pred)
-   
+
 
 if __name__ == "__main__":
-    fire.Fire({
-        'infer': infer
-    }) 
+    fire.Fire({"infer": infer})
