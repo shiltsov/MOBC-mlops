@@ -1,6 +1,7 @@
+import fire
 import numpy as np
 import tensorflow as tf
-import fire
+
 
 # Random seed for reproducibility
 seed = 42
@@ -30,10 +31,8 @@ num_classes = 10
 input_shape = (28, 28, 1)
 
 
-
-
 def train(X_train_name: str, y_train_name: str):
-    print("Training model" , X_train_name, y_train_name)
+    print("Training model", X_train_name, y_train_name)
 
     data_mean = 0.1307
     data_std = 0.3081
@@ -44,7 +43,7 @@ def train(X_train_name: str, y_train_name: str):
 
     x_train = x_train.reshape(x_train.shape[0], x_train.shape[1], x_train.shape[2], 1)
     x_train = (x_train / 255.0 - data_mean) / data_std
-    
+
     y_train = tf.one_hot(y_train.astype(np.int32), depth=num_classes)
 
     # Define the architecture of the neural network
@@ -89,7 +88,7 @@ def train(X_train_name: str, y_train_name: str):
     # is len(x_train) steps
     scheduler = tf.keras.optimizers.schedules.ExponentialDecay(
         learning_rate, decay_steps=len(x_train), decay_rate=gamma
-    )   
+    )
 
     # Define the optimizer to user for gradient descent
     optimizer = tf.keras.optimizers.Adadelta(scheduler)
@@ -100,15 +99,14 @@ def train(X_train_name: str, y_train_name: str):
     # Display a model summary
     print(model.summary())
 
-
     # Train the model
     model.fit(
         x_train,
         y_train,
         batch_size=batch_size,
         epochs=n_epochs,
-        #validation_data=(x_test, y_test),
-        #validation_batch_size=test_batch_size,
+        # validation_data=(x_test, y_test),
+        # validation_batch_size=test_batch_size,
     )
 
     if save_model:
@@ -118,6 +116,4 @@ def train(X_train_name: str, y_train_name: str):
 
 
 if __name__ == "__main__":
-    fire.Fire({
-        'train': train
-    }) 
+    fire.Fire({"train": train})

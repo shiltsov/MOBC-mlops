@@ -21,7 +21,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tools.poetry.group.dev]
-optional true
+optional = false
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.6"
@@ -36,18 +36,3 @@ target-version = ["py39"]
 profile = "black"
 line_length = 90
 lines_after_imports = 2
-
-
-[tool.nbqa.config]
-black = "pyproject.toml"
-isort = "pyproject.toml"
-flake8 = "setup.cfg"
-
-
-[tool.nbqa.addopts]
-flake8 = ["--extend-ignore=E402"]
-
-
-[tool.nbqa.mutate]
-black = 1
-isort = 1

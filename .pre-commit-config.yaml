@@ -30,16 +30,6 @@ repos:
       - id: flake8
         additional_dependencies: [flake8-bugbear]
 
-  - repo: https://github.com/nbQA-dev/nbQA
-    rev: 1.7.1
-    hooks:
-      - id: nbqa-black
-        additional_dependencies: [black==23.11.0]
-      - id: nbqa-isort
-        additional_dependencies: [isort==5.12.0]
-      - id: nbqa-flake8
-        additional_dependencies: [flake8==6.1.0]
-
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v4.0.0-alpha.3
     hooks:
