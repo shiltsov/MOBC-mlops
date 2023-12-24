@@ -72,7 +72,7 @@ def infer():
         ]
     )
 
-    model.load_weights("../data/mnist_cnn_tf.ckpt").expect_partial()
+    model.load_weights("../models/mnist_cnn_tf.ckpt").expect_partial()
     pred = model.predict(x_test)
 
     print(pred)
