@@ -1,3 +1,4 @@
+import dvc.api
 import fire
 import numpy as np
 import tensorflow as tf
@@ -31,13 +32,18 @@ num_classes = 10
 input_shape = (28, 28, 1)
 
 
-def infer(X_test_name: str):
+def infer():
+    with dvc.api.open(
+        "data/X_test.npy", repo="https://github.com/shiltsov/MOBC-mlops"
+    ) as f:
+        x_test = np.load(f.read_bytes("data/X_test."))
+
     # The scaled mean and standard deviation of the MNIST dataset (precalculated)
     data_mean = 0.1307
     data_std = 0.3081
 
     # Load the MNIST dataset
-    x_test = np.load(X_test_name)
+
     # y_test = np.load(y_test_name)
 
     x_test = x_test.reshape(x_test.shape[0], x_test.shape[1], x_test.shape[2], 1)

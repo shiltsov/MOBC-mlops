@@ -132,3 +132,6 @@ dmypy.json
 data/*
 
 poetry.lock
+
+data/*
+!data/*.dvc
