@@ -12,6 +12,7 @@ tensorflow-datasets = "^4.9.3"
 dvc = "^3.33.3"
 dvc-s3 = "^2.23.0"
 fire = "^0.5.0"
+dvc-gdrive = "^3.0.0"
 
 [build-system]
 requires = ["poetry-core"]
