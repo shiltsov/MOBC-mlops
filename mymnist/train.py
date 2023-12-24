@@ -1,6 +1,7 @@
 import fire
 import numpy as np
 import tensorflow as tf
+from dvc.api import DVCFileSystem
 
 
 # Random seed for reproducibility
@@ -31,15 +32,16 @@ num_classes = 10
 input_shape = (28, 28, 1)
 
 
-def train(X_train_name: str, y_train_name: str):
-    print("Training model", X_train_name, y_train_name)
-
+def train():
     data_mean = 0.1307
     data_std = 0.3081
 
     # Load the MNIST dataset
-    x_train = np.load(X_train_name)
-    y_train = np.load(y_train_name)
+    DVCFileSystem().get("../data/X_train.npy", "../data/X_train.npy")
+    DVCFileSystem().get("../data/y_train.npy", "../data/y_train.npy")
+
+    x_train = np.load("../data/X_train.npy")
+    y_train = np.load("../data/y_train.npy")
 
     x_train = x_train.reshape(x_train.shape[0], x_train.shape[1], x_train.shape[2], 1)
     x_train = (x_train / 255.0 - data_mean) / data_std
@@ -110,7 +112,7 @@ def train(X_train_name: str, y_train_name: str):
     )
 
     if save_model:
-        model.save_weights("../data/mnist_cnn_tf.ckpt")
+        model.save_weights("../models/mnist_cnn_tf.ckpt")
 
     print("Model ready")
 

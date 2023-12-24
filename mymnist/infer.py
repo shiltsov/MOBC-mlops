@@ -1,7 +1,7 @@
-import dvc.api
 import fire
 import numpy as np
 import tensorflow as tf
+from dvc.api import DVCFileSystem
 
 
 # Random seed for reproducibility
@@ -33,10 +33,8 @@ input_shape = (28, 28, 1)
 
 
 def infer():
-    with dvc.api.open(
-        "data/X_test.npy", repo="https://github.com/shiltsov/MOBC-mlops"
-    ) as f:
-        x_test = np.load(f.read_bytes("data/X_test."))
+    DVCFileSystem().get("../data/X_test.npy", "../data/X_test.npy")
+    x_test = np.load("../data/X_test.npy")
 
     # The scaled mean and standard deviation of the MNIST dataset (precalculated)
     data_mean = 0.1307
