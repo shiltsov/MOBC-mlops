@@ -1,7 +1,9 @@
 import fire
+import hydra
 import numpy as np
 import tensorflow as tf
 from dvc.api import DVCFileSystem
+from omegaconf import DictConfig
 
 
 # Data input shape
@@ -9,7 +11,8 @@ input_shape = (28, 28, 1)
 num_classes = 10
 
 
-def infer():
+@hydra.main(config_path="../configs", config_name="mobc-mlops", version_base="1.3")
+def infer(cfg: DictConfig = None) -> None:
     DVCFileSystem().get("../data/X_test.npy", "../data/X_test.npy")
     x_test = np.load("../data/X_test.npy")
 
