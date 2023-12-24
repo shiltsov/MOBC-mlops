@@ -1,13 +1,10 @@
 import fire
+import hydra
 import numpy as np
 import tensorflow as tf
 from dvc.api import DVCFileSystem
+from omegaconf import DictConfig
 
-
-# Random seed for reproducibility
-seed = 42
-
-tf.keras.utils.set_random_seed(seed)
 
 # Save the model at the end?
 save_model = True
@@ -17,7 +14,7 @@ batch_size = 64
 test_batch_size = 14
 
 # Training epochs (usually 10 is a good value)
-n_epochs = 2
+n_epochs = 0
 
 # Learning rate
 learning_rate = 1.0
@@ -32,7 +29,8 @@ num_classes = 10
 input_shape = (28, 28, 1)
 
 
-def train():
+@hydra.main(config_path="../configs", config_name="mobc-mlops", version_base="1.3")
+def train(cfg: DictConfig = None) -> DictConfig:
     data_mean = 0.1307
     data_std = 0.3081
 
@@ -48,6 +46,12 @@ def train():
 
     y_train = tf.one_hot(y_train.astype(np.int32), depth=num_classes)
 
+    shape = (
+        cfg["data"]["input_shape_x"],
+        cfg["data"]["input_shape_y"],
+        cfg["data"]["input_shape_z"],
+    )
+
     # Define the architecture of the neural network
     model = tf.keras.models.Sequential(
         [
@@ -57,7 +61,7 @@ def train():
                 strides=(1, 1),
                 padding="valid",
                 activation="relu",
-                input_shape=input_shape,
+                input_shape=shape,
             ),
             tf.keras.layers.Conv2D(
                 64, (3, 3), strides=(1, 1), padding="valid", activation="relu"
@@ -105,8 +109,8 @@ def train():
     model.fit(
         x_train,
         y_train,
-        batch_size=batch_size,
-        epochs=n_epochs,
+        batch_size=cfg["training"]["batch_size"],
+        epochs=cfg["training"]["n_epochs"],
         # validation_data=(x_test, y_test),
         # validation_batch_size=test_batch_size,
     )

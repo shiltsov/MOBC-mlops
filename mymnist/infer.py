@@ -4,32 +4,9 @@ import tensorflow as tf
 from dvc.api import DVCFileSystem
 
 
-# Random seed for reproducibility
-seed = 42
-
-tf.keras.utils.set_random_seed(seed)
-
-# Save the model at the end?
-save_model = True
-
-# Batch sizes for training and testing
-batch_size = 64
-test_batch_size = 14
-
-# Training epochs (usually 10 is a good value)
-n_epochs = 2
-
-# Learning rate
-learning_rate = 1.0
-
-# Decay rate for adjusting the learning rate
-gamma = 0.7
-
-# Number of target classes in the MNIST data
-num_classes = 10
-
 # Data input shape
 input_shape = (28, 28, 1)
+num_classes = 10
 
 
 def infer():
