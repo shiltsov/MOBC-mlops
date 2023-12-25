@@ -135,3 +135,6 @@ poetry.lock
 
 data/*
 !data/*.dvc
+mobc-mlops/mlartifacts/*
+mobc-mlops/mlruns/*
+mobc-mlops/outputs/*
