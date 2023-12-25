@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "mobc-mlops"
+name = "mobc_mlops"
 version = "0.1.0"
 description = "Homework - small pet project based on MNIST dataset. As simple as..."
 authors = ["Dmitry Shiltsov <sda@asperito.ru>"]

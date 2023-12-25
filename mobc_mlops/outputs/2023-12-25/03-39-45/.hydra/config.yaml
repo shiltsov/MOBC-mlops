@@ -1,0 +1,20 @@
+data:
+  input_shape_x: 28
+  input_shape_y: 28
+  input_shape_z: 1
+  path: ../data
+  test_size: 0.2
+  num_classes: 10
+model:
+  name: mnist
+  dropout_1: 0.7
+  dropout_2: 0.9
+training:
+  save_model: true
+  batch_size: 16
+  test_batch_size: 16
+  n_epochs: 3
+  learning_rate: 1.0
+  gamma: 0.7
+mlflow:
+  uri: http://128.0.1.1:5000
