@@ -1,4 +1,5 @@
 import logging
+import os
 
 import fire
 import git
@@ -17,15 +18,17 @@ def train(cfg: DictConfig = None) -> None:
     data_std = 0.3081
 
     # Load the MNIST dataset
-    DVCFileSystem().get("../data/X_train.npy", "../data/X_train.npy")
-    DVCFileSystem().get("../data/y_train.npy", "../data/y_train.npy")
-    DVCFileSystem().get("../data/X_test.npy", "../data/X_test.npy")
-    DVCFileSystem().get("../data/y_test.npy", "../data/y_test.npy")
+    cdir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../data/")
 
-    x_train = np.load("../data/X_train.npy")
-    y_train = np.load("../data/y_train.npy")
-    x_test = np.load("../data/X_test.npy")
-    y_test = np.load("../data/y_test.npy")
+    DVCFileSystem().get("/data/X_train.npy", os.path.join(cdir, "X_train.npy"))
+    DVCFileSystem().get("/data/y_train.npy", os.path.join(cdir, "y_train.npy"))
+    DVCFileSystem().get("/data/X_test.npy", os.path.join(cdir, "X_test.npy"))
+    DVCFileSystem().get("/data/y_test.npy", os.path.join(cdir, "y_test.npy"))
+
+    x_train = np.load(os.path.join(cdir, "X_train.npy"))
+    y_train = np.load(os.path.join(cdir, "y_train.npy"))
+    x_test = np.load(os.path.join(cdir, "X_test.npy"))
+    y_test = np.load(os.path.join(cdir, "y_test.npy"))
 
     x_train = x_train.reshape(x_train.shape[0], x_train.shape[1], x_train.shape[2], 1)
     x_train = (x_train / 255.0 - data_mean) / data_std
@@ -101,7 +104,7 @@ def train(cfg: DictConfig = None) -> None:
             optimizer=optimizer,
             loss="categorical_crossentropy",
             metrics=[
-                tf.keras.metrics.Accuracy(),
+                "acc",
                 tf.keras.metrics.Precision(),
                 tf.keras.metrics.Recall(),
             ],
@@ -121,7 +124,9 @@ def train(cfg: DictConfig = None) -> None:
         )
 
         if cfg.training.save_model:
-            model.save_weights(cfg.training.save_weights_file)
+            cdir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../models/")
+            modelfile = os.path.join(cdir, cfg.training.save_weights_file)
+            model.save_weights(modelfile)
 
         logging.info("Model ready")
 

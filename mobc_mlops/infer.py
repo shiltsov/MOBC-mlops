@@ -1,4 +1,5 @@
 import logging
+import os
 
 import fire
 import hydra
@@ -10,8 +11,11 @@ from omegaconf import DictConfig
 
 @hydra.main(config_path="../configs", config_name="mobc-mlops", version_base="1.3")
 def infer(cfg: DictConfig = None) -> None:
-    DVCFileSystem().get("../data/X_test.npy", "../data/X_test.npy")
-    x_test = np.load("../data/X_test.npy")
+    cdir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../data/")
+    dvcfile = os.path.join(cdir, "X_test.npy")
+
+    DVCFileSystem().get("/data/X_test.npy", dvcfile)
+    x_test = np.load(dvcfile)
 
     # The scaled mean and standard deviation of the MNIST dataset (precalculated)
     data_mean = 0.1307
@@ -50,7 +54,10 @@ def infer(cfg: DictConfig = None) -> None:
         ]
     )
 
-    model.load_weights(cfg.training.save_weights_file).expect_partial()
+    cdir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../models/")
+    modelfile = os.path.join(cdir, cfg.training.save_weights_file)
+
+    model.load_weights(modelfile).expect_partial()
     pred = model.predict(x_test)
 
     np.savetxt(cfg.infer.output_file, pred)

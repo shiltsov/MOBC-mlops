@@ -18,7 +18,7 @@ training:
     n_epochs: 2
     learning_rate: 1.0
     gamma: 0.7
-    save_weights_file: ../models/mnist_cnn_tf.ckpt
+    save_weights_file: mnist_cnn_tf.ckpt
 infer:
     output_file: result.txt
 
