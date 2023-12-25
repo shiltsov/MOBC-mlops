@@ -23,12 +23,12 @@
 
 - configs - файлы конфигурации (hydra)
 - data - данные (под управлением dvc)
-- mobc-mlops - файлы с кодом
+- mobc_mlops - файлы с кодом
 - models модкели (под управлением dvc)
 
 ## Запуск из командной строки
 
-- python3 mobc-mlops/train.py
-- python3 mobc-mlops/infer.py
+- python3 mobc_mlops/train.py
+- python3 mobc_mlops/infer.py
 
 результат работы infer.py - файл лежащий в текущей папке (он прописан в hydra)
