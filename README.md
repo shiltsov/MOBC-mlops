@@ -28,7 +28,7 @@
 
 ## Запуск из командной строки
 
-- python3 train.py
-- python3 infer.py
+- python3 mobc-mlops/train.py
+- python3 mobc-mlops/infer.py
 
 результат работы infer.py - файл лежащий в текущей папке (он прописан в hydra)
