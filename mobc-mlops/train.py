@@ -121,7 +121,7 @@ def train(cfg: DictConfig = None) -> None:
         )
 
         if cfg.training.save_model:
-            model.save_weights("../models/mnist_cnn_tf.ckpt")
+            model.save_weights(cfg.training.save_weights_file)
 
         logging.info("Model ready")
 

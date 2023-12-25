@@ -13,11 +13,14 @@ model:
 
 training:
     save_model: True
-    batch_size: 16
-    test_batch_size: 16
-    n_epochs: 3
+    batch_size: 128
+    test_batch_size: 32
+    n_epochs: 2
     learning_rate: 1.0
     gamma: 0.7
+    save_weights_file: ../models/mnist_cnn_tf.ckpt
+infer:
+    output_file: result.txt
 
 mlflow:
     uri: http://128.0.1.1:5000

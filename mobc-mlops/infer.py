@@ -50,10 +50,10 @@ def infer(cfg: DictConfig = None) -> None:
         ]
     )
 
-    model.load_weights("../models/mnist_cnn_tf.ckpt").expect_partial()
+    model.load_weights(cfg.training.save_weights_file).expect_partial()
     pred = model.predict(x_test)
 
-    print(pred)
+    np.savetxt(cfg.infer.output_file, pred)
     logging.info("Done")
 
 
