@@ -137,7 +137,8 @@ data/*
 !data/*.dvc
 models/*
 !models/*.dvc
-#outputs/*
+outputs/*
+mobc_mlops/outputs/*
 mlartifacts/*
 mlruns/*
 
