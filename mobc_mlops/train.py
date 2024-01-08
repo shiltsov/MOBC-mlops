@@ -1,5 +1,5 @@
 import logging
-import os
+import pathlib
 
 import fire
 import git
@@ -14,21 +14,28 @@ from omegaconf import DictConfig
 
 @hydra.main(config_path="../configs", config_name="mobc-mlops", version_base="1.3")
 def train(cfg: DictConfig = None) -> None:
-    data_mean = 0.1307
-    data_std = 0.3081
+    data_mean = cfg.data.data_mean
+    data_std = cfg.data.data_std
 
     # Load the MNIST dataset
-    cdir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../data/")
+    cdir = pathlib.Path(__file__).parents[1].joinpath("data")
 
-    DVCFileSystem().get("/data/X_train.npy", os.path.join(cdir, "X_train.npy"))
-    DVCFileSystem().get("/data/y_train.npy", os.path.join(cdir, "y_train.npy"))
-    DVCFileSystem().get("/data/X_test.npy", os.path.join(cdir, "X_test.npy"))
-    DVCFileSystem().get("/data/y_test.npy", os.path.join(cdir, "y_test.npy"))
+    DVCFileSystem().get("/data/X_train.csv", str(cdir.joinpath("X_train.csv")))
+    DVCFileSystem().get("/data/y_train.csv", str(cdir.joinpath("y_train.csv")))
+    DVCFileSystem().get("/data/X_test.csv", str(cdir.joinpath("X_test.csv")))
+    DVCFileSystem().get("/data/y_test.csv", str(cdir.joinpath("y_test.csv")))
 
-    x_train = np.load(os.path.join(cdir, "X_train.npy"))
-    y_train = np.load(os.path.join(cdir, "y_train.npy"))
-    x_test = np.load(os.path.join(cdir, "X_test.npy"))
-    y_test = np.load(os.path.join(cdir, "y_test.npy"))
+    x_train = np.loadtxt(cdir.joinpath("X_train.csv"), delimiter=",")
+    x_train = x_train.reshape(
+        x_train.shape[0], cfg.data.input_shape_x, cfg.data.input_shape_y
+    )
+    y_train = np.loadtxt(cdir.joinpath("y_train.csv"), delimiter=",")
+
+    x_test = np.loadtxt(cdir.joinpath("X_test.csv"), delimiter=",")
+    x_test = x_test.reshape(
+        x_test.shape[0], cfg.data.input_shape_x, cfg.data.input_shape_y
+    )
+    y_test = np.loadtxt(cdir.joinpath("y_test.csv"), delimiter=",")
 
     x_train = x_train.reshape(x_train.shape[0], x_train.shape[1], x_train.shape[2], 1)
     x_train = (x_train / 255.0 - data_mean) / data_std
@@ -124,9 +131,9 @@ def train(cfg: DictConfig = None) -> None:
         )
 
         if cfg.training.save_model:
-            cdir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../models/")
-            modelfile = os.path.join(cdir, cfg.training.save_weights_file)
-            model.save_weights(modelfile)
+            cdir = pathlib.Path(__file__).parents[1].joinpath("models")
+            modelfile = cdir.joinpath(cfg.training.save_weights_file)
+            model.save(modelfile)
 
         logging.info("Model ready")
 

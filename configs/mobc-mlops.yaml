@@ -5,6 +5,8 @@ data:
     path: ../data
     test_size: 0.2
     num_classes: 10
+    data_mean: 0.1307
+    data_std: 0.3081
 
 model:
     name: mnist
@@ -18,7 +20,7 @@ training:
     n_epochs: 2
     learning_rate: 1.0
     gamma: 0.7
-    save_weights_file: mnist_cnn_tf.ckpt
+    save_weights_file: model
 infer:
     output_file: result.txt
 

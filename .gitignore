@@ -137,6 +137,9 @@ data/*
 !data/*.dvc
 models/*
 !models/*.dvc
+outputs/*
+mlartifacts/*
+mlruns/*
 
 
 mobc-mlops/mlartifacts/*
